@@ -13,8 +13,6 @@ int main(void)
 	char **tokenArray;
 	int status, i = 0;
 	pid_t child_pid;
-	/*int j;*/
-	/*char *h[] = {"/usr/bin/ls", "-l", NULL};*/
 	while (1)
 	{
 		write(1, "#cisfun$ ", 9);
@@ -32,21 +30,17 @@ int main(void)
 		child_pid = fork();
 		if (child_pid == -1)
 			perror("Error");
-		if (child_pid == 0)
+		else if (child_pid == 0)
 		{
-			if (execve(tokenArray[0], tokenArray, NULL) == -1)
-			{
-				perror("error");
-			}
+			execve(tokenArray[0], tokenArray, NULL);
+			
+			perror("error");
+			
 		}
 		else
 		{
 			wait(&status);
 		}
-	/*for (j = 0; tokenArray[j] != NULL; j++)
-	{
-		printf("%s", tokenArray[j]);
-	}*/
 		free(tokenArray);
 		i = 0;
 	}
